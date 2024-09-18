@@ -1,0 +1,55 @@
+<?php
+// Membuat koneksi ke database
+$conn = mysqli_connect("localhost", "root", "", "bpd");
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
+// Query untuk mengambil semua data anggota
+$query = "SELECT * FROM anggota";
+$result = mysqli_query($conn, $query);
+
+
+echo "<div style='text-align: center;'>";
+echo "<h2>NAMA NAMA PIMPINAN BADAN PERMUSYAWARATAN DESA</h2>";
+echo "<h3>DESA BULILA Kec. Talaga, Kab. Gorontalo, Gorontalo, Provinsi Gorontalo</h3>";
+echo "<hr>";
+echo "</div>";
+echo "<br>";
+// Memulai tabel dengan gaya CSS untuk memposisikan dan memperbesar
+echo "<table border='1' style='margin: 0 auto; width: 80%; font-size: 16px;'>"; // Tabel akan di tengah dengan lebar 80% dan ukuran font 16px
+echo "<thead>";
+echo "<tr>";
+echo "<th>Nama</th>";
+echo "<th>Jabatan</th>";
+echo "<th>Masa Jabatan</th>";
+echo "<th>Nomor Telepon</th>";
+echo "<th>NIP</th>";
+echo "</tr>";
+echo "</thead>";
+echo "<tbody>";
+
+// Memeriksa apakah terdapat data anggota
+if (mysqli_num_rows($result) > 0) {
+    // Mengambil setiap baris data dan menampilkannya dalam tabel
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($row['nama']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['jabatan']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['masa_jabatan']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['nomor_telpon']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['NIP']) . "</td>";
+        echo "</tr>";
+    }
+} else {
+    // Jika tidak ada data anggota
+    echo "<tr><td colspan='5'>Tidak ada data anggota</td></tr>";
+}
+
+// Menutup tabel
+echo "</tbody>";
+echo "</table>";
+
+// Menutup koneksi database
+mysqli_close($conn);
+?>
